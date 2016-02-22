@@ -152,6 +152,11 @@ skewer.fn.eval = function(request) {
  */
 skewer.fn.script = function(request) {
     var script = document.createElement('script');
+    // Use ES6 in Firefox.
+    // http://stackoverflow.com/a/14331721/606355
+    if (/Firefox/.test(navigator.userAgent)) {
+        script.type = 'application/javascript;version=1.7';
+    }
     script.src = skewer.host + request.eval;
     document.body.appendChild(script);
     return {value: JSON.stringify(request.eval)};
